@@ -188,6 +188,7 @@ input{
 
 .start-menu #start:hover{
     background-color: #B332E6;
+    border-color: #B332E6;
     color: white;
 }
 
