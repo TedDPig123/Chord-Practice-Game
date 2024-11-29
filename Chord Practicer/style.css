@@ -24,7 +24,7 @@ body{
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 50vw;
-    min-width: 450px;
+    min-width: 500px;
 }
 
 h1{
@@ -158,4 +158,21 @@ h1{
     text-align:center;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.inputs, option{
+    color:#8632E6;
+}
+
+input{
+    width: 35px;
+}
+
+.start-menu div{
+    margin: 10px auto;
+    padding: 7px;
+    font-size: 25px;
+    width: 90%;
+    border-radius: 25px;
+    border: 8px solid white;
 }
