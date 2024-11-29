@@ -75,7 +75,6 @@ h1{
     margin-left:auto;
     margin-right: auto;
     font-size: 80px;
-    margin-top: 5%;
     margin-bottom: 5%;
     /* TURN INTO CIRCLE */
     height:200px;
@@ -122,12 +121,26 @@ h1{
     font-size: 40px;
 }
 
+.slider-container{
+    display: grid;
+}
+
+#slider-cover{
+    grid-column: 1;
+    grid-row:1;
+    z-index: 2;
+    width: 100%;
+}
+
 .slider{
+    z-index: 1;
+    grid-column: 1;
+    grid-row:1;
     margin: 3% auto;
     width: 70%;
     accent-color: white;
     background-color: #020314;
-
+    margin-bottom: 10%;
 }
 
 .play-menu-buttons{
@@ -141,6 +154,8 @@ h1{
     color: #8632E6;
     width: 40%;
     padding: 7px;
+    margin-left: 4px;
+    margin-right: 4px;
     font-size: 25px;
     border-radius: 25px;
     margin-bottom: 10px;
@@ -195,4 +210,10 @@ input{
 #play-quit:hover{
     background-color: #B332E6;
     color: white;
+}
+
+#tap-bpm{
+    color: #8632E6;
+    text-align: center;
+    width: 45px;
 }
