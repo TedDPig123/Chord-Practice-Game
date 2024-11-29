@@ -19,5 +19,10 @@ function findChordsInKey(key){
         }
     }
 
+    returnChords[1] = returnChords[1].concat("m");
+    returnChords[2] = returnChords[2].concat("m");
+    returnChords[5] = returnChords[5].concat("m");
+    returnChords[6] = returnChords[1].concat("°");
+
     return returnChords;
 }
