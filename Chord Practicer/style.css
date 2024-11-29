@@ -144,6 +144,8 @@ h1{
     font-size: 25px;
     border-radius: 25px;
     margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .start-menu{
@@ -175,4 +177,21 @@ input{
     width: 90%;
     border-radius: 25px;
     border: 8px solid white;
+}
+
+.start-menu #start{
+    background-color: white;
+    color: #8632E6;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.start-menu #start:hover{
+    background-color: #B332E6;
+    color: white;
+}
+
+#play-quit:hover{
+    background-color: #B332E6;
+    color: white;
 }
