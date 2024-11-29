@@ -1,3 +1,7 @@
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const musical_alphabet = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
 
 function findChordsInKey(key){
