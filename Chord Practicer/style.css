@@ -239,6 +239,11 @@ h1{
     color: white;
 }
 
+.pause-toggle{
+    background-color: #B332E6 !important;
+    color: white !important;
+}
+
 #tap-bpm{
     color: #8632E6;
     text-align: center;

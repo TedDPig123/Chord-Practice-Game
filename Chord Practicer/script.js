@@ -60,6 +60,11 @@ function findChordsInKey(key){
 
 elements.pauseButton.addEventListener('mousedown', ()=>{
     togglePause = !togglePause;
+    if(togglePause){
+        elements.pauseButton.classList.remove('pause-toggle');
+    }else{
+        elements.pauseButton.classList.add('pause-toggle');
+    }
 });
 
 function getRandomChord(chordsArray){
