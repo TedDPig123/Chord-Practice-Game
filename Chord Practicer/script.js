@@ -72,13 +72,24 @@ function displayPlayMenu(){
     const minutes = document.getElementById('input-minutes').value;
     const seconds = document.getElementById('input-seconds').value;
 
+    setTimeout(() => {
+        currKey = key.value;
+        currChords = findChordsInKey(currKey);
+
+        playKeyDisplay.textContent = 'KEY: ' + currKey;
+        playBPMDisplay.textContent = 'BPM: ' + currBPM;
+
+        currentChordDisplayed = getRandomChord(currChords);
+        nextChordDisplayed = getRandomChord(currChords.filter((e)=>e!==currentChordDisplayed));
+
+        currChord.textContent = currentChordDisplayed;
+        nextChord.textContent = nextChordDisplayed;
+    }, 500);
+
     const duration = (parseInt(minutes)*60) + parseInt(seconds);
     currBPM = parseInt(bpmDisplay.value);
     BPMIntervalDS = Math.floor(600 / currBPM); //deciseconds per beat
     countdownStart(duration);
-    
-    playKeyDisplay.textContent = 'KEY: ' + currKey;
-    playBPMDisplay.textContent = 'BPM: ' + currBPM;
 
     const playMenu = document.querySelector('.play-menu');
     const startMenu = document.querySelector('.start-menu');
@@ -107,22 +118,24 @@ function countdownStart(timer){
     let seconds;
     let display = document.getElementById('curr-time');
     interval = setInterval(function () {
-        if(durationDS % BPMIntervalDS === 0){
+        if (durationDS % BPMIntervalDS === 0) {
             currChord.classList.add('current-chord-display-anim');
-            let currSlideVal = (parseInt(slider.value) + 25);
-            if (currSlideVal > 100) {
-                currSlideVal = 0;
-                currentChordDisplayed = nextChordDisplayed;
-                nextChordDisplayed = getRandomChord(currChords.filter((e)=>e!==currentChordDisplayed));
-            };
-            slider.value = currSlideVal;
-            console.log(currSlideVal);
-        }else{
+
+            setTimeout(() => {
+                let currSlideVal = parseInt(slider.value) + 25;
+                if (currSlideVal > 100) {
+                    currSlideVal = 25;
+                    currChord.textContent = nextChord.textContent;
+                    nextChord.textContent = nextChordDisplayed;
+                }
+                if (currSlideVal === 75){
+                    nextChordDisplayed = currChords[Math.floor(Math.random()*currChords.length)];
+                }
+                slider.value = currSlideVal;
+            }, 150);
+        } else {
             currChord.classList.remove('current-chord-display-anim');
         }
-
-        currChord.textContent = currentChordDisplayed;
-        nextChord.textContent = nextChordDisplayed;
 
         minutes = parseInt(durationDS / 600);
         seconds = parseInt((durationDS % 600)/ 10);
