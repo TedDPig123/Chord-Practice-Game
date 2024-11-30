@@ -33,7 +33,7 @@ h1{
     display:block;
     margin-left: auto;
     margin-right: auto;
-    font-size: 60px;
+    font-size: 50px;
     margin-bottom: 0;
 }
 
@@ -87,6 +87,21 @@ h1{
     -webkit-box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.44);
     -moz-box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.44);
     box-shadow: 8px 8px 5px -2px rgba(0,0,0,0.44);
+    /* transition */
+    -webkit-transition:font-size 0.3s;
+    -moz-transition:font-size 0.3s;
+    -ms-transition:font-size 0.3s;
+    -o-transition:font-size 0.3s;
+    transition:font-size 0.3s;
+}
+
+.current-chord-display-anim{
+    font-size: 90px;
+    -webkit-transition:font-size 0s;
+    -moz-transition:font-size 0s;
+    -ms-transition:font-size 0s;
+    -o-transition:font-size 0s;
+    transition:font-size 0s;
 }
 
 #next-chord-display{
@@ -181,7 +196,11 @@ h1{
     color:#8632E6;
 }
 
-input{
+#bpm-display{
+    width: 48px;
+}
+
+#choose-duration input{
     width: 35px;
 }
 
@@ -207,7 +226,7 @@ input{
     color: white;
 }
 
-#play-quit:hover{
+.play-menu-buttons div:hover{
     background-color: #B332E6;
     color: white;
 }

@@ -2,13 +2,16 @@ const musical_alphabet = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
 
 const startButton = document.getElementById('start');
 const quitButton = document.getElementById('play-quit');
+const restartButton = document.getElementById('play-restart');
 const slider = document.getElementById('time-slider');
+const currChord = document.getElementById('current-chord-display');
+const tapButton = document.getElementById('tap-bpm');
+const bpmDisplay = document.getElementById('bpm-display');
 
 let interval;
 
-function displayChords(){
-
-}
+let currBPM;
+let BPMIntervalDS;
 
 function findChordsInKey(key){
     const returnChords = [];
@@ -42,6 +45,8 @@ function displayPlayMenu(){
     const seconds = document.getElementById('input-seconds').value;
 
     const duration = (parseInt(minutes)*60) + parseInt(seconds);
+    currBPM = parseInt(bpmDisplay.value);
+    BPMIntervalDS = Math.floor(60/currBPM)*10; //deciseconds per beat
     countdownStart(duration);
 
     const playMenu = document.querySelector('.play-menu');
@@ -59,32 +64,41 @@ function displayStartMenu(){
 }
 
 startButton.addEventListener('click', displayPlayMenu);
+restartButton.addEventListener('click', ()=>{
+    clearInterval(interval);
+    displayPlayMenu();
+});
 quitButton.addEventListener('click', displayStartMenu);
 
 function countdownStart(timer){
-    let duration = timer;
+    let durationDS = timer * 10;
     let minutes; 
     let seconds;
     let display = document.getElementById('curr-time');
     interval = setInterval(function () {
-        minutes = parseInt(duration / 60, 10);
-        seconds = parseInt(duration % 60, 10);
+        if(durationDS % BPMIntervalDS){
+            currChord.classList.add('current-chord-display-anim');
+        }else{
+            currChord.classList.remove('current-chord-display-anim');
+        }
+
+        minutes = parseInt(durationDS / 600);
+        seconds = parseInt((durationDS % 600)/ 10);
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
-        slider.value = ((timer - duration)/timer)*100;
+        slider.value = (((timer*10) - durationDS)/(timer*10))*100;
 
-        if (--duration < 0) {
+        if (--durationDS < 0) {
             clearInterval(interval);
         }
-    }, 1000);
+    }, 100);
 }
 
 // <---- BPM COUNTER ---->
-const tapButton = document.getElementById('tap-bpm');
-const bpmDisplay = document.getElementById('bpm-display');
+
 const intervalArray = [];
 let lastTapTime = 0;
 
