@@ -15,6 +15,7 @@ const elements = {
     currTimeDisplay: document.getElementById('curr-time'),
     startMenu: document.querySelector('.start-menu'),
     playMenu: document.querySelector('.play-menu'),
+    pauseButton: document.getElementById('play-pause')
 };
 
 const currChord = document.getElementById('current-chord-display');
@@ -25,7 +26,7 @@ const keyInput = document.getElementById('key');
 const playKeyDisplay = document.getElementById('key-display');
 const playBPMDisplay = document.getElementById('bpm-display-1');
 
-let togglePause = false;
+let togglePause = true;
 
 let interval;
 
@@ -56,6 +57,10 @@ function findChordsInKey(key){
 
     return returnChords;
 }
+
+elements.pauseButton.addEventListener('mousedown', ()=>{
+    togglePause = !togglePause;
+});
 
 function getRandomChord(chordsArray){
     const randIndex = Math.floor(Math.random()*(chordsArray.length-1));
@@ -112,35 +117,37 @@ function countdownStart(timer){
     let seconds;
     let display = document.getElementById('curr-time');
     interval = setInterval(function () {
-        if (durationDS % BPMIntervalDS === 0) {
-            currChord.classList.add('current-chord-display-anim');
-
-            setTimeout(() => {
-                let currSlideVal = parseInt(elements.slider.value) + 25;
-                if (currSlideVal > 100) {
-                    currSlideVal = 25;
-                    currChord.textContent = nextChord.textContent;
-                    nextChord.textContent = nextChordDisplayed;
-                }
-                if (currSlideVal === 75){
-                    nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
-                }
-                elements.slider.value = currSlideVal;
-            }, 150);
-        } else {
-            currChord.classList.remove('current-chord-display-anim');
-        }
-
-        minutes = parseInt(durationDS / 600);
-        seconds = parseInt((durationDS % 600)/ 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--durationDS < 0) {
-            clearInterval(interval);
+        if(togglePause){
+            if (durationDS % BPMIntervalDS === 0) {
+                currChord.classList.add('current-chord-display-anim');
+    
+                setTimeout(() => {
+                    let currSlideVal = parseInt(elements.slider.value) + 25;
+                    if (currSlideVal > 100) {
+                        currSlideVal = 25;
+                        currChord.textContent = nextChord.textContent;
+                        nextChord.textContent = nextChordDisplayed;
+                    }
+                    if (currSlideVal === 75){
+                        nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
+                    }
+                    elements.slider.value = currSlideVal;
+                }, 150);
+            } else {
+                currChord.classList.remove('current-chord-display-anim');
+            }
+    
+            minutes = parseInt(durationDS / 600);
+            seconds = parseInt((durationDS % 600)/ 10);
+    
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = minutes + ":" + seconds;
+    
+            if (--durationDS < 0) {
+                clearInterval(interval);
+            }
         }
     }, 100);
 }
