@@ -15,7 +15,9 @@ const elements = {
     currTimeDisplay: document.getElementById('curr-time'),
     startMenu: document.querySelector('.start-menu'),
     playMenu: document.querySelector('.play-menu'),
-    pauseButton: document.getElementById('play-pause')
+    pauseButton: document.getElementById('play-pause'),
+    dotsContainer: document.querySelector('.bpm-dots'),
+    dotsArray: document.querySelector('.bpm-dots').children
 };
 
 const currChord = document.getElementById('current-chord-display');
@@ -120,28 +122,34 @@ function countdownStart(timer){
     let durationDS = timer * 10;
     let minutes; 
     let seconds;
+    let count = 0;
     let display = document.getElementById('curr-time');
     interval = setInterval(function () {
         if(togglePause){
             if (durationDS % BPMIntervalDS === 0) {
                 currChord.classList.add('current-chord-display-anim');
-    
-                setTimeout(() => {
-                    let currSlideVal = parseInt(elements.slider.value) + 25;
-                    if (currSlideVal > 100) {
-                        currSlideVal = 25;
-                        currChord.textContent = nextChord.textContent;
-                        nextChord.textContent = nextChordDisplayed;
-                    }
-                    if (currSlideVal === 75){
-                        nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
-                    }
-                    elements.slider.value = currSlideVal;
-                }, 150);
+                count++;
             } else {
                 currChord.classList.remove('current-chord-display-anim');
             }
-    
+
+            if (count >= 0 && count <= 3){
+                elements.dotsArray[count].style.backgroundColor = '#020314';
+            }
+
+            if (count > 3) {
+                count = 0;
+                elements.dotsArray[1].style.backgroundColor = '#FFFFFF';
+                elements.dotsArray[2].style.backgroundColor = '#FFFFFF';
+                elements.dotsArray[3].style.backgroundColor = '#FFFFFF';
+                currChord.textContent = nextChord.textContent;
+                nextChord.textContent = nextChordDisplayed;
+            }
+
+            if (count === 2){
+                nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
+            }
+
             minutes = parseInt(durationDS / 600);
             seconds = parseInt((durationDS % 600)/ 10);
     
