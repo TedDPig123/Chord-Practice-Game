@@ -37,19 +37,35 @@ let currChords;
 let currentChordDisplayed;
 let nextChordDisplayed;
 
-function findChordsInKey(key) {
-    const chords = [];
-    let index = musicalAlphabet.indexOf(key);
-    if (index === -1) return []; // Invalid key
-    [2, 2, 1, 2, 2, 2, 1].forEach((step, i) => {
-        chords.push(musicalAlphabet[index] + (i === 1 || i === 2 || i === 5 ? 'm' : i === 6 ? '°' : ''));
-        index = (index + step) % musicalAlphabet.length;
-    });
-    return chords;
+function findChordsInKey(key){
+    const returnChords = [];
+    let index = musical_alphabet.findIndex(e=>{return e === key});
+    let count = 0;
+    while(count < 7){
+        returnChords.push(musical_alphabet[index]);
+        count++;
+
+        if(count === 2){
+            index++;
+        }else{
+            index = index + 2;
+        }
+
+        if(index >= musical_alphabet.length){
+            index = index % musical_alphabet.length;
+        }
+    }
+
+    returnChords[1] = returnChords[1].concat("m");
+    returnChords[2] = returnChords[2].concat("m");
+    returnChords[5] = returnChords[5].concat("m");
+    returnChords[6] = returnChords[6].concat("°");
+
+    return returnChords;
 }
 
 function getRandomChord(chordsArray){
-    const randIndex = Math.floor(Math.random()*6);
+    const randIndex = Math.floor(Math.random()*(chordsArray.length-1));
     return chordsArray[randIndex];
 }
 
@@ -61,6 +77,7 @@ function displayPlayMenu(){
     setTimeout(() => {
         currKey = key.value;
         currChords = findChordsInKey(currKey);
+        console.log(currChords);
 
         playKeyDisplay.textContent = 'KEY: ' + currKey;
         playBPMDisplay.textContent = 'BPM: ' + currBPM;
@@ -113,7 +130,7 @@ function countdownStart(timer){
                     nextChord.textContent = nextChordDisplayed;
                 }
                 if (currSlideVal === 75){
-                    nextChordDisplayed = currChords[Math.floor(Math.random()*currChords.length)];
+                    nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
                 }
                 elements.slider.value = currSlideVal;
             }, 150);
