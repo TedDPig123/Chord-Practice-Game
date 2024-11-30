@@ -1,9 +1,22 @@
 const musical_alphabet = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
 
-const startButton = document.getElementById('start');
-const quitButton = document.getElementById('play-quit');
-const restartButton = document.getElementById('play-restart');
-const slider = document.getElementById('time-slider');
+const elements = {
+    startButton: document.getElementById('start'),
+    quitButton: document.getElementById('play-quit'),
+    restartButton: document.getElementById('play-restart'),
+    slider: document.getElementById('time-slider'),
+    currChord: document.getElementById('current-chord-display'),
+    nextChord: document.getElementById('next-chord-display'),
+    tapButton: document.getElementById('tap-bpm'),
+    bpmDisplay: document.getElementById('bpm-display'),
+    keyInput: document.getElementById('key'),
+    playKeyDisplay: document.getElementById('key-display'),
+    playBPMDisplay: document.getElementById('bpm-display-1'),
+    currTimeDisplay: document.getElementById('curr-time'),
+    startMenu: document.querySelector('.start-menu'),
+    playMenu: document.querySelector('.play-menu'),
+};
+
 const currChord = document.getElementById('current-chord-display');
 const nextChord = document.getElementById('next-chord-display')
 const tapButton = document.getElementById('tap-bpm');
@@ -24,48 +37,21 @@ let currChords;
 let currentChordDisplayed;
 let nextChordDisplayed;
 
-function findChordsInKey(key){
-    const returnChords = [];
-    let index = musical_alphabet.findIndex(e=>{return e === key});
-    let count = 0;
-    while(count < 7){
-        returnChords.push(musical_alphabet[index]);
-        count++;
-
-        if(count === 2){
-            index++;
-        }else{
-            index = index + 2;
-        }
-
-        if(index >= musical_alphabet.length){
-            index = index % musical_alphabet.length;
-        }
-    }
-
-    returnChords[1] = returnChords[1].concat("m");
-    returnChords[2] = returnChords[2].concat("m");
-    returnChords[5] = returnChords[5].concat("m");
-    returnChords[6] = returnChords[6].concat("°");
-
-    return returnChords;
+function findChordsInKey(key) {
+    const chords = [];
+    let index = musicalAlphabet.indexOf(key);
+    if (index === -1) return []; // Invalid key
+    [2, 2, 1, 2, 2, 2, 1].forEach((step, i) => {
+        chords.push(musicalAlphabet[index] + (i === 1 || i === 2 || i === 5 ? 'm' : i === 6 ? '°' : ''));
+        index = (index + step) % musicalAlphabet.length;
+    });
+    return chords;
 }
 
 function getRandomChord(chordsArray){
     const randIndex = Math.floor(Math.random()*6);
     return chordsArray[randIndex];
 }
-
-keyInput.addEventListener('change', ()=>{
-    currKey = key.value;
-    currChords = findChordsInKey(currKey);
-
-    currentChordDisplayed = getRandomChord(currChords);
-    nextChordDisplayed = getRandomChord(currChords.filter((e)=>e!==currentChordDisplayed));
-
-    currChord.textContent = currentChordDisplayed;
-    nextChord.textContent = nextChordDisplayed;
-});
 
 // KICKER-OFFER
 function displayPlayMenu(){
@@ -91,26 +77,24 @@ function displayPlayMenu(){
     BPMIntervalDS = Math.floor(600 / currBPM); //deciseconds per beat
     countdownStart(duration);
 
-    const playMenu = document.querySelector('.play-menu');
-    const startMenu = document.querySelector('.start-menu');
-    playMenu.style.display = 'flex';
-    startMenu.style.display = 'none';
+    elements.playMenu.style.display = 'flex';
+    elements.startMenu.style.display = 'none';
 }
 
 function displayStartMenu(){
-    const playMenu = document.querySelector('.play-menu');
-    const startMenu = document.querySelector('.start-menu');
-    playMenu.style.display = 'none';
-    startMenu.style.display = 'flex';
+    elements.playMenu = document.querySelector('.play-menu');
+    elements.startMenu = document.querySelector('.start-menu');
+    elements.playMenu.style.display = 'none';
+    elements.startMenu.style.display = 'flex';
     clearInterval(interval);
 }
 
-startButton.addEventListener('click', displayPlayMenu);
-restartButton.addEventListener('click', ()=>{
+elements.startButton.addEventListener('click', displayPlayMenu);
+elements.restartButton.addEventListener('click', ()=>{
     clearInterval(interval);
     displayPlayMenu();
 });
-quitButton.addEventListener('click', displayStartMenu);
+elements.quitButton.addEventListener('click', displayStartMenu);
 
 function countdownStart(timer){
     let durationDS = timer * 10;
@@ -122,7 +106,7 @@ function countdownStart(timer){
             currChord.classList.add('current-chord-display-anim');
 
             setTimeout(() => {
-                let currSlideVal = parseInt(slider.value) + 25;
+                let currSlideVal = parseInt(elements.slider.value) + 25;
                 if (currSlideVal > 100) {
                     currSlideVal = 25;
                     currChord.textContent = nextChord.textContent;
@@ -131,7 +115,7 @@ function countdownStart(timer){
                 if (currSlideVal === 75){
                     nextChordDisplayed = currChords[Math.floor(Math.random()*currChords.length)];
                 }
-                slider.value = currSlideVal;
+                elements.slider.value = currSlideVal;
             }, 150);
         } else {
             currChord.classList.remove('current-chord-display-anim');
