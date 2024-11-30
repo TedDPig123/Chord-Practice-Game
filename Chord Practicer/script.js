@@ -40,21 +40,14 @@ let nextChordDisplayed;
 function findChordsInKey(key){
     const returnChords = [];
     let index = musical_alphabet.findIndex(e=>{return e === key});
-    let count = 0;
-    while(count < 7){
+    let steps = [2,2,1,2,2,2,1];
+    steps.forEach((step)=>{
         returnChords.push(musical_alphabet[index]);
-        count++;
-
-        if(count === 2){
-            index++;
-        }else{
-            index = index + 2;
-        }
-
+        index += step;
         if(index >= musical_alphabet.length){
-            index = index % musical_alphabet.length;
+            index -= musical_alphabet.length;
         }
-    }
+    })
 
     returnChords[1] = returnChords[1].concat("m");
     returnChords[2] = returnChords[2].concat("m");
