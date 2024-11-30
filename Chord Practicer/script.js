@@ -151,7 +151,7 @@ function countdownStart(timer){
             }
 
             if (count === 2){
-                nextChordDisplayed = currChords[Math.floor(Math.random()*(currChords.length-1))];
+                nextChordDisplayed = currChords.filter((e)=>e!==nextChordDisplayed)[Math.floor(Math.random()*(currChords.length-1))];
             }
 
             minutes = parseInt(durationDS / 600);
@@ -186,7 +186,7 @@ tapButton.addEventListener('mousedown', () => {
         }
 
         const avgInterval = intervalArray.reduce((sum, e) => sum + e, 0) / intervalArray.length;
-        const currBPM = Math.floor(60000 / avgInterval);
+        currBPM = Math.floor(60000 / avgInterval);
 
         if (currBPM > 200){
             currBPM = 200;
