@@ -1,4 +1,4 @@
-let audio = new Audio('/Chord Practicer/metronome-85688.mp3');
+let audio = new Audio('metronome-85688.mp3');
 
 const musical_alphabet = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
 
