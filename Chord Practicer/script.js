@@ -46,7 +46,7 @@ function displayPlayMenu(){
 
     const duration = (parseInt(minutes)*60) + parseInt(seconds);
     currBPM = parseInt(bpmDisplay.value);
-    BPMIntervalDS = Math.floor(60/currBPM)*10; //deciseconds per beat
+    BPMIntervalDS = Math.floor(600 / currBPM); //deciseconds per beat
     countdownStart(duration);
 
     const playMenu = document.querySelector('.play-menu');
@@ -76,8 +76,9 @@ function countdownStart(timer){
     let seconds;
     let display = document.getElementById('curr-time');
     interval = setInterval(function () {
-        if(durationDS % BPMIntervalDS){
+        if(durationDS % BPMIntervalDS === 0){
             currChord.classList.add('current-chord-display-anim');
+            console.log('pulse');
         }else{
             currChord.classList.remove('current-chord-display-anim');
         }

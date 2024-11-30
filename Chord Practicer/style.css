@@ -95,8 +95,8 @@ h1{
     transition:font-size 0.3s;
 }
 
-.current-chord-display-anim{
-    font-size: 90px;
+#current-chord-display.current-chord-display-anim{
+    font-size: 90px !important;
     -webkit-transition:font-size 0s;
     -moz-transition:font-size 0s;
     -ms-transition:font-size 0s;
