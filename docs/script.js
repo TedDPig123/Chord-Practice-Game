@@ -121,6 +121,10 @@ elements.restartButton.addEventListener('click', ()=>{
 elements.quitButton.addEventListener('click', displayStartMenu);
 
 function countdownStart(timer){
+    elements.dotsArray[1].style.backgroundColor = '#FFFFFF';
+    elements.dotsArray[2].style.backgroundColor = '#FFFFFF';
+    elements.dotsArray[3].style.backgroundColor = '#FFFFFF';
+    
     let durationDS = timer * 10;
     let minutes; 
     let seconds;
