@@ -23,10 +23,6 @@
                 <div id="current-chord-display">A#</div>
                 <div id="next-chord-display">B♭</div>
             </div>
-            <!-- <div class="slider-container">
-                <input class="slider" id="time-slider" type="range" value="25" readonly>
-                <div id="slider-cover"></div>
-            </div> -->
             <div class="bpm-dots">
                 <div id="dot-1"></div>
                 <div id="dot-2"></div>
@@ -43,7 +39,7 @@
 
         <div class="start-menu">
             <div id="start">START</div>
-            <div id="">CHOOSE KEY <span>
+            <div id="">CHOOSE KEY
                 <select class="inputs" name="key" id="key">
                     <option value="A">A</option>
                     <option value="A#">A#</option>
@@ -58,16 +54,16 @@
                     <option value="G">G</option>
                     <option value="G#">G#</option>
                 </select>
-            </span></div>
+                </div>
             <div id="choose-duration">CHOOSE DURATION <span>
                 <input class="inputs" type="number" id="input-minutes" min="0" max="15" value="5">
-                <span>:</span>
+                :
                 <input class="inputs" type="number" id="input-seconds" min="1" max="59" value="30">
             </span></div>
-            <div id="">CHOOSE BPM <span>
-                <input type="button" value="TAP" id="tap-bpm">
+            <div id="">CHOOSE BPM
+                <input class="inputs" type="button" value="TAP" id="tap-bpm">
                 <input class="inputs" type="number" value="80" min="1" max="150" id="bpm-display">
-            </span></div>
+            </div>
         </div>
 
     </div>
