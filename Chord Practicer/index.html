@@ -15,16 +15,19 @@
         </div>
 
         <div class="play-menu">
-            <div id="key-display">KEY: </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div id="key-display">KEY:</div>
+                <div id="bpm-display-1">BPM:</div>
+            </div>
             <div class="display-section">
                 <div id="current-chord-display">A#</div>
                 <div id="next-chord-display">B♭</div>
             </div>
-            <div id="curr-time"></div>
             <div class="slider-container">
-                <input class="slider" id="time-slider" type="range" min="1" max="100" value="0" readonly>
+                <input class="slider" id="time-slider" type="range" value="0" readonly>
                 <div id="slider-cover"></div>
             </div>
+            <div id="curr-time"></div>
             <div class="play-menu-buttons">
                 <div id="play-restart">RESTART</div>
                 <div id="play-pause">PAUSE</div>
@@ -57,7 +60,7 @@
             </span></div>
             <div id="">CHOOSE BPM <span>
                 <input type="button" value="TAP" id="tap-bpm">
-                <input class="inputs" type="number" value="80" min="1" id="bpm-display">
+                <input class="inputs" type="number" value="80" min="1" max="200" id="bpm-display">
             </span></div>
         </div>
 

@@ -5,13 +5,24 @@ const quitButton = document.getElementById('play-quit');
 const restartButton = document.getElementById('play-restart');
 const slider = document.getElementById('time-slider');
 const currChord = document.getElementById('current-chord-display');
+const nextChord = document.getElementById('next-chord-display')
 const tapButton = document.getElementById('tap-bpm');
 const bpmDisplay = document.getElementById('bpm-display');
+const keyInput = document.getElementById('key');
+const playKeyDisplay = document.getElementById('key-display');
+const playBPMDisplay = document.getElementById('bpm-display-1');
+
+let togglePause = false;
 
 let interval;
 
 let currBPM;
 let BPMIntervalDS;
+let currKey;
+let currChords;
+
+let currentChordDisplayed;
+let nextChordDisplayed;
 
 function findChordsInKey(key){
     const returnChords = [];
@@ -40,6 +51,23 @@ function findChordsInKey(key){
     return returnChords;
 }
 
+function getRandomChord(chordsArray){
+    const randIndex = Math.floor(Math.random()*6);
+    return chordsArray[randIndex];
+}
+
+keyInput.addEventListener('change', ()=>{
+    currKey = key.value;
+    currChords = findChordsInKey(currKey);
+
+    currentChordDisplayed = getRandomChord(currChords);
+    nextChordDisplayed = getRandomChord(currChords.filter((e)=>e!==currentChordDisplayed));
+
+    currChord.textContent = currentChordDisplayed;
+    nextChord.textContent = nextChordDisplayed;
+});
+
+// KICKER-OFFER
 function displayPlayMenu(){
     const minutes = document.getElementById('input-minutes').value;
     const seconds = document.getElementById('input-seconds').value;
@@ -48,11 +76,14 @@ function displayPlayMenu(){
     currBPM = parseInt(bpmDisplay.value);
     BPMIntervalDS = Math.floor(600 / currBPM); //deciseconds per beat
     countdownStart(duration);
+    
+    playKeyDisplay.textContent = 'KEY: ' + currKey;
+    playBPMDisplay.textContent = 'BPM: ' + currBPM;
 
     const playMenu = document.querySelector('.play-menu');
     const startMenu = document.querySelector('.start-menu');
     playMenu.style.display = 'flex';
-    startMenu.style.display = 'none';    
+    startMenu.style.display = 'none';
 }
 
 function displayStartMenu(){
@@ -78,10 +109,20 @@ function countdownStart(timer){
     interval = setInterval(function () {
         if(durationDS % BPMIntervalDS === 0){
             currChord.classList.add('current-chord-display-anim');
-            console.log('pulse');
+            let currSlideVal = (parseInt(slider.value) + 25);
+            if (currSlideVal > 100) {
+                currSlideVal = 0;
+                currentChordDisplayed = nextChordDisplayed;
+                nextChordDisplayed = getRandomChord(currChords.filter((e)=>e!==currentChordDisplayed));
+            };
+            slider.value = currSlideVal;
+            console.log(currSlideVal);
         }else{
             currChord.classList.remove('current-chord-display-anim');
         }
+
+        currChord.textContent = currentChordDisplayed;
+        nextChord.textContent = nextChordDisplayed;
 
         minutes = parseInt(durationDS / 600);
         seconds = parseInt((durationDS % 600)/ 10);
@@ -90,7 +131,6 @@ function countdownStart(timer){
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
-        slider.value = (((timer*10) - durationDS)/(timer*10))*100;
 
         if (--durationDS < 0) {
             clearInterval(interval);
@@ -116,6 +156,11 @@ tapButton.addEventListener('mousedown', () => {
 
         const avgInterval = intervalArray.reduce((sum, e) => sum + e, 0) / intervalArray.length;
         const currBPM = Math.floor(60000 / avgInterval);
+
+        if (currBPM > 200){
+            currBPM = 200;
+        }
+
         bpmDisplay.value = currBPM;
     }
     lastTapTime = currentTime;
