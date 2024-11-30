@@ -1,3 +1,5 @@
+let audio = new Audio('/Chord Practicer/metronome-85688.mp3');
+
 const musical_alphabet = ['A','A#','B','C','C#','D','D#','E','F','F#','G','G#'];
 
 const elements = {
@@ -127,6 +129,8 @@ function countdownStart(timer){
     interval = setInterval(function () {
         if(togglePause){
             if (durationDS % BPMIntervalDS === 0) {
+                const newAudio = audio.cloneNode()
+                newAudio.play()
                 currChord.classList.add('current-chord-display-anim');
                 count++;
             } else {
