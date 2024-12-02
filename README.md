@@ -2,7 +2,7 @@
 **Technologies**: Vanilla JavaScript, CSS, and HTML.
 **Link:** Try the game out on https://teddpig123.github.io/Chord-Practice-Game/
 
-![image info](Chord I.png)
+![ChordImage](Chord I.png)
 
 As a self-taught guitarist, I am always looking for new ways to help improve my own skills. One aspect I want to work on is being able to transition between any two chord shapes seamlessly - which is why I created this simple web app. In essence, this web app allows the user to choose a key to practice in, a duration to practice for, and a BPM to practice with to allow them to train their ability to transition between any two chords within the key.
  # Features
